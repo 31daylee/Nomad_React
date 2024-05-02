@@ -10,10 +10,12 @@
   <script type="text/babel">
     function App() {
       const [minutes, setMinutes] = React.useState();
+      const [flipped, setFlipped] = React.useState(false);
       const onChange = (e) => {
         setMinutes(e.target.value);
       };
       const reset = () => setMinutes(0);
+      const onFlip = () => setFlipped((current) => !current);
       return (
         <div>
           <h1 className="hi">Super Converter</h1>
@@ -25,6 +27,7 @@
               placeholder="Minutes"
               type="number"
               onChange={onChange}
+              disabled={flipped}
             />
           </div>
           <div>
@@ -35,10 +38,12 @@
               id="hours"
               placeholder="Hours"
               type="number"
-              disabled
+              disabled={!flipped}
+              onChange={onChange}
             />
           </div>
           <button onClick={reset}>Reset</button>
+          <button onClick={onFlip}>Flip</button>
         </div>
       );
     }
