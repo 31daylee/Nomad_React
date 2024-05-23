@@ -1,6 +1,7 @@
 import { func } from "prop-types";
 import { useState, useEffect } from "react";
 
+// opt1
 function Hello() {
   function destroyedFn() {
     console.log("destroyed");
@@ -12,6 +13,8 @@ function Hello() {
   useEffect(effectFn, []);
   return <h1>Hello</h1>;
 }
+
+// opt2
 useEffect(() => {
   console.log("hi ");
   return () => console.log("bye");
