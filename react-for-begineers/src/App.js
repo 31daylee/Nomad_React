@@ -1,37 +1,30 @@
-import { func } from "prop-types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-// opt1
-function Hello() {
-  function destroyedFn() {
-    console.log("destroyed");
-  }
-  function effectFn() {
-    console.log("created");
-    return destroyedFn;
-  }
-  useEffect(effectFn, []);
-  return <h1>Hello</h1>;
-}
-
-// opt2
-useEffect(() => {
-  console.log("hi ");
-  return () => console.log("bye");
-}, []);
-useEffect(function () {
-  console.log("hi");
-  return function () {
-    console.log("bye");
-  };
-}, []);
 function App() {
-  const [showing, setShowing] = useState(false);
-  const onClick = () => setShowing((prev) => !prev);
+  const [todo, setTodo] = useState();
+  const [todos, setToodos] = useState([]);
+  const onChange = (e) => setTodo(e.target.value);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (todo === "") {
+      return;
+    }
+    setToodos((currentArray) => [todo, ...currentArray]); // ... 을 붙임으로써 Array() 가 아닌 값만 가져온다
+    setTodo(""); // todo 입력후 빈값으로 셋팅
+  };
+  console.log(todos);
   return (
     <div>
-      {showing ? <Hello /> : null}
-      <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
+      <h1>TODO LIST({todos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={todo}
+          type="text"
+          placeholder="Write your TODO!"
+        ></input>
+        <button>Add TODO</button>
+      </form>
     </div>
   );
 }
