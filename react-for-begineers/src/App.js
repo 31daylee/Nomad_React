@@ -12,7 +12,6 @@ function App() {
     setToodos((currentArray) => [todo, ...currentArray]); // ... 을 붙임으로써 Array() 가 아닌 값만 가져온다
     setTodo(""); // todo 입력후 빈값으로 셋팅
   };
-  console.log(todos);
   return (
     <div>
       <h1>TODO LIST({todos.length})</h1>
@@ -25,6 +24,12 @@ function App() {
         ></input>
         <button>Add TODO</button>
       </form>
+      <hr />
+      <ul>
+        {todos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
