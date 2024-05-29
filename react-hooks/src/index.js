@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-const useInput = (initialValue) => {
+const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
   const onChange = (e) => {
-    console.log(e.target);
+    const {
+      target: { value },
+    } = e;
+    let willUpdate = true;
+    if (typeof validator === "function") {
+      willUpdate = validator(value);
+    }
+    if (willUpdate) {
+      setValue(value);
+    }
   };
   return { value, onChange };
 };
 
 const App = () => {
-  const name = useInput("Mr.");
+  const maxLen = (value) => !value.includes("@");
+  const name = useInput("Mr.", maxLen);
   return (
     <div className="App">
       <h1>Hello</h1>
